@@ -1,14 +1,13 @@
 import Ember from 'ember';
 
 export default Ember.Service.extend({
-
   getCrimeFile() {
-    let url = '/crime.csv';
-    Papa.parse(url, {
-	     download: true,
-	     complete: function(results) {
-		       console.log(results);
-	     }
-     });
+    return new Ember.RSVP.Promise(function(resolve, reject) {
+      Papa.parse('/crime.csv', {
+        download: true,
+        complete: resolve,
+        error: reject
+      });
+    });
   }
 });
